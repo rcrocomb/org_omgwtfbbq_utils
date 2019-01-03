@@ -1,6 +1,4 @@
-#!/usr/bin/env groovy
-
-package com.shutterfly.lti.util
+package org.omgwtfbbq.util
 
 import groovy.util.logging.Commons
 import org.apache.commons.logging.Log

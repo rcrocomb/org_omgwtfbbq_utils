@@ -1,13 +1,11 @@
 package org.omgwtfbbq.util
 
-import static org.omgwtfbbq.util.LogUtil.debug
-
 import groovy.util.logging.Commons
 
 import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZonedDateTime
 import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @Commons

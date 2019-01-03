@@ -2,9 +2,8 @@ package org.omgwtfbbq.util
 
 import static org.omgwtfbbq.util.LogUtil.debug
 
-import com.google.gson.Gson
-
 import groovy.util.logging.Commons
+import groovy.json.JsonOutput
 
 import org.apache.commons.logging.Log
 
@@ -51,10 +50,6 @@ abstract class Dump {
 	static void dump(Log l, Set s) {
 		int ndigits = s.size().toString().length()
 		s.sort().eachWithIndex {  it, i -> debug(l, "[%${ndigits}d/%${ndigits}d] %s", i, s.size(), it) }
-	}
-
-	static void dump(AttributeValue v) {
-		debug(v.s)
 	}
 
 	/*

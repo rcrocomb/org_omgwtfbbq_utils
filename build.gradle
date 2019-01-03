@@ -1,6 +1,5 @@
 apply plugin: 'groovy'
 apply plugin: 'idea'
-apply plugin: 'maven'
 
 // Chunk pulled from: http://ingorichter.blogspot.com/2013/03/using-cobertura-with-gradle.html
 buildscript {
@@ -24,8 +23,9 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.codehaus.groovy:groovy:2.5.0'
+	implementation 'org.codehaus.groovy:groovy-all:2.5.0'
 	implementation 'com.google.code.gson:gson:2.8.5'
+	implementation 'commons-logging:commons-logging:1.2'
 
 	testCompile 'junit:junit:4.12'
 }

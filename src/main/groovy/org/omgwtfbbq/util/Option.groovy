@@ -1,5 +1,3 @@
-#!/usr/bin/env groovy
-
 package org.omgwtfbbq.util
 
 import static org.omgwtfbbq.util.LogUtil.debug

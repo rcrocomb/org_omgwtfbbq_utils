@@ -1,14 +1,8 @@
-#!/usr/bin/env groovy
-
-package com.shutterfly.lti.util
-
-import static com.shutterfly.lti.util.LogUtil.*
+package org.omgwtfbbq.util
 
 import groovy.util.logging.Commons
 
-import java.util.concurrent.ExecutorCompletionService
-import java.util.concurrent.Executors
-import java.util.concurrent.ExecutorService
+import static org.omgwtfbbq.util.LogUtil.*
 
 @Commons
 abstract class ThreadUtil {
@@ -27,7 +21,7 @@ abstract class ThreadUtil {
 
 		boolean didQuit = false
 		long future = System.currentTimeMillis() + 5 * 1000
-		for (int j = 0 ; ; ++j) {
+		for (int j = 0; ; ++j) {
 			if (executorService.isShutdown()) {
 				log.debug("Good.. everything is shutdown")
 				didQuit = true
@@ -69,7 +63,7 @@ abstract class ThreadUtil {
 		}
 
 		// Until all threads are done
-		for (int iteration = 0 ; ; ++iteration) {
+		for (int iteration = 0; ; ++iteration) {
 			threads.eachWithIndex { Thread t, int i ->
 				if (t.state != previousState[i]) {
 					info("[%6d][%2d] Thread ${t.name} has changed state from ${previousState[i]} --> ${t.state}", iteration, i)
@@ -102,4 +96,5 @@ abstract class ThreadUtil {
 			Thread.sleep(1000)
 		}
 	}
+
 }
