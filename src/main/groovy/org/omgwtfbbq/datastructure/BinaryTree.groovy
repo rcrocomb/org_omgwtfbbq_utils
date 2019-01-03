@@ -128,10 +128,11 @@ class BinaryTree<T> {
             atThisDepth.eachWithIndex { coordinate, j ->
                 int relativeX = j == 0 ? coordinate.count : coordinate.count - atThisDepth[j - 1].count // TODO: could do a 'previous' instead
                 relativeX.times { print "    " }
-                print coordinate.data
+                print (coordinate.data != null ? coordinate.data : "x")
                 if (j + 1 == atThisDepth.size()) print "\n"
             }
         }
+        println "-" * 80
     }
 
     /*
@@ -161,19 +162,26 @@ class BinaryTree<T> {
 
         where I show nodes that really won't print during the draw call but show
         how now '2' is not under '1' because there's space for the null left
-        child of 2.
+        child of 2.  Whoops, well I guess each node should have it's own X-coordinate,
+        really, so...
+
+       1
+      x
+          3
+         2 x
+        x
 
         The drawing algorithm I have requires the null children.  I haven't thought
         about how not to have them and still get things right: the X coordinate in
         their algorithm is simply the number of nodes you've traversed in the in-order
         traverse, but you must count the null child.
 
-        TODO: am I smart enough to draw the tree properly with null nodes?  Maaabye.
+        TODO: am I smart enough to draw the tree properly with null nodes?  Maaaybe.
      */
     void draw(Node<T> node, action, AtomicInteger count, int depth) {
-        if (node.left) draw(node.left, action, count, depth + 1) else count.incrementAndGet()
+        if (node.left) draw(node.left, action, count, depth + 1) else action(new Node<>(data: null), count, depth + 1)
         action(node, count, depth)
-        if (node.right) draw(node.right, action, count, depth + 1) else count.incrementAndGet()
+        if (node.right) draw(node.right, action, count, depth + 1) else action(new Node<>(data: null), count, depth + 1)
     }
 }
 
