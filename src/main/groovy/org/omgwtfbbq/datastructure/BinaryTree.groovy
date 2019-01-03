@@ -179,9 +179,9 @@ class BinaryTree<T> {
         TODO: am I smart enough to draw the tree properly with null nodes?  Maaaybe.
      */
     void draw(Node<T> node, action, AtomicInteger count, int depth) {
-        if (node.left) draw(node.left, action, count, depth + 1) else action(new Node<>(data: null), count, depth + 1)
+        if (node.left) draw(node.left, action, count, depth + 1) else count.getAndIncrement()
         action(node, count, depth)
-        if (node.right) draw(node.right, action, count, depth + 1) else action(new Node<>(data: null), count, depth + 1)
+        if (node.right) draw(node.right, action, count, depth + 1) else count.getAndIncrement()
     }
 }
 
