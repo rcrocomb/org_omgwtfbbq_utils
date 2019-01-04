@@ -7,17 +7,6 @@ import java.util.concurrent.atomic.AtomicInteger
 @Commons
 class BinaryTree<T> {
 
-    static class Node<T> {
-        T data
-        Node<T> left
-        Node<T> right
-        Node<T> parent
-
-        boolean isLeaf() {
-            !(left || right)
-        }
-    }
-
     Node<T> root
 
     def add(T newData) {
