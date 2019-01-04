@@ -151,8 +151,8 @@ class BinaryTreeTests {
         tree.add(2)
         tree.add(1)
         tree.add(3)
-        tree.add(5)
         tree.add(4)
+        tree.add(5)
 
         assertNotNull(tree.find(1))
         assertNotNull(tree.find(2))
@@ -169,8 +169,8 @@ class BinaryTreeTests {
         tree.add(2)
         tree.add(1)
         tree.add(3)
-        tree.add(5)
         tree.add(4)
+        tree.add(5)
 
         assertTrue(tree.contains(1))
         assertTrue(tree.contains(2))
@@ -179,5 +179,74 @@ class BinaryTreeTests {
         assertTrue(tree.contains(5))
         assertFalse(tree.contains(0))
         assertFalse(tree.contains(null))
+    }
+
+    /*
+             2
+            / \
+           1   4
+              / \
+             3   5
+     */
+
+    @Test
+    void test_preOrder_1() {
+        BinaryTree<Integer> tree = new BinaryTree<>()
+        tree.add(2)
+        tree.add(1)
+        tree.add(4)
+        tree.add(3)
+        tree.add(5)
+
+        def traversal = []
+        def output = tree.preOrder({ node -> traversal << node.data })
+        assertTrue(output.is(traversal))
+        assertEquals([2, 1, 4, 3, 5], output)
+    }
+
+    /*
+             2
+            / \
+           1   4
+              / \
+             3   5
+     */
+
+    @Test
+    void test_inOrder_1() {
+        BinaryTree<Integer> tree = new BinaryTree<>()
+        tree.add(2)
+        tree.add(1)
+        tree.add(4)
+        tree.add(3)
+        tree.add(5)
+
+        def traversal = []
+        def output = tree.inOrder({ node -> traversal << node.data })
+        assertTrue(output.is(traversal))
+        assertEquals([1, 2, 3, 4, 5], output)
+    }
+
+    /*
+             2
+            / \
+           1   4
+              / \
+             3   5
+     */
+
+    @Test
+    void test_postOrder_1() {
+        BinaryTree<Integer> tree = new BinaryTree<>()
+        tree.add(2)
+        tree.add(1)
+        tree.add(4)
+        tree.add(3)
+        tree.add(5)
+
+        def traversal = []
+        def output = tree.postOrder({ node -> traversal << node.data })
+        assertTrue(output.is(traversal))
+        assertEquals([1, 3, 5, 4, 2], output)
     }
 }

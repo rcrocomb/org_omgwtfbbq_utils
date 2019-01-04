@@ -72,14 +72,19 @@ class BinaryTree<T> {
         return null
     }
 
+    /*
+        Closure gets passed the Node.  Should I only pass the data?
+     */
+
     def preOrder(closure) {
         preOrder(root, closure)
     }
 
     def preOrder(node, closure) {
-        closure(node)
-        if (node.left) preOrder(node.left, closure)
-        if (node.right) preOrder(node.right, closure)
+        def ret = closure(node)
+        if (node.left) ret = preOrder(node.left, closure)
+        if (node.right) ret = preOrder(node.right, closure)
+        return ret
     }
 
     def inOrder(closure) {
@@ -88,8 +93,9 @@ class BinaryTree<T> {
 
     def inOrder(node, closure) {
         if (node.left) inOrder(node.left, closure)
-        closure(node)
-        if (node.right) inOrder(node.right, closure)
+        def ret = closure(node)
+        if (node.right) ret = inOrder(node.right, closure)
+        return ret
     }
 
     def postOrder(closure) {
@@ -99,7 +105,7 @@ class BinaryTree<T> {
     def postOrder(node, closure) {
         if (node.left) postOrder(node.left, closure)
         if (node.right) postOrder(node.right, closure)
-        closure(node)
+        return closure(node)
     }
 
     void draw() {
