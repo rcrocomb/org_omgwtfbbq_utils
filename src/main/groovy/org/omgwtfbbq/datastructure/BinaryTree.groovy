@@ -175,9 +175,8 @@ class BinaryTree<T> {
         about how not to have them and still get things right: the X coordinate in
         their algorithm is simply the number of nodes you've traversed in the in-order
         traverse, but you must count the null child.
+    */
 
-        TODO: am I smart enough to draw the tree properly with null nodes?  Maaaybe.
-     */
     void draw(Node<T> node, action, AtomicInteger count, int depth) {
         if (node.left) draw(node.left, action, count, depth + 1) else count.getAndIncrement()
         action(node, count, depth)
