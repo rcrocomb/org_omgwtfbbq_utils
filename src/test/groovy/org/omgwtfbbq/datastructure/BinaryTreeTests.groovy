@@ -1,14 +1,21 @@
 package org.omgwtfbbq.datastructure
 
 import groovy.util.logging.Commons
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-import static org.junit.jupiter.api.Assertions.assertNotNull
-import static org.junit.jupiter.api.Assertions.assertNull
-import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.*
 
 @Commons
 class BinaryTreeTests {
+
+    @Test
+    void test_add_0() {
+        BinaryTree<Integer> tree = new BinaryTree<>()
+        Assertions.assertThrows(IllegalArgumentException, {
+            tree.add(null)
+        })
+    }
 
     @Test
     void test_add_1() {
@@ -136,7 +143,41 @@ class BinaryTreeTests {
         assertNotNull(right.parent)
         assertEquals(root, right.parent)
         assertEquals(3, right.data)
+    }
 
+    @Test
+    void test_find_1() {
+        BinaryTree<Integer> tree = new BinaryTree<>()
+        tree.add(2)
+        tree.add(1)
+        tree.add(3)
+        tree.add(5)
+        tree.add(4)
 
+        assertNotNull(tree.find(1))
+        assertNotNull(tree.find(2))
+        assertNotNull(tree.find(3))
+        assertNotNull(tree.find(4))
+        assertNotNull(tree.find(5))
+        assertNull(tree.find(0))
+        assertNull(tree.find(null))
+    }
+
+    @Test
+    void test_contains_1() {
+        BinaryTree<Integer> tree = new BinaryTree<>()
+        tree.add(2)
+        tree.add(1)
+        tree.add(3)
+        tree.add(5)
+        tree.add(4)
+
+        assertTrue(tree.contains(1))
+        assertTrue(tree.contains(2))
+        assertTrue(tree.contains(3))
+        assertTrue(tree.contains(4))
+        assertTrue(tree.contains(5))
+        assertFalse(tree.contains(0))
+        assertFalse(tree.contains(null))
     }
 }

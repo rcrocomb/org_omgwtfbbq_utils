@@ -1,5 +1,6 @@
 package org.omgwtfbbq.datastructure
 
+import com.google.common.base.Preconditions
 import groovy.util.logging.Commons
 
 import java.util.concurrent.atomic.AtomicInteger
@@ -10,6 +11,7 @@ class BinaryTree<T> {
     Node<T> root
 
     def add(T newData) {
+        Preconditions.checkArgument(newData != null)
         if (!root) {
             // I think parent = null so that we could traverse up and know when to stop more easily?
             root = new Node(data: newData, left: null, right: null, parent: null)
@@ -38,28 +40,32 @@ class BinaryTree<T> {
         find(data) != null
     }
 
-    Node<T> find(T data) {
+    /*
+        For simple types like integer, find() is basically contains().
+     */
+
+    T find(T data) {
         return root ? find(root, data) : null
     }
 
     // Pre-orderish.
     // TODO: hmm, maybe pass a "matcher closure" rather than use '=='?  So could do 'String.startsWith', etc.
-    Node<T> find(Node<T> node, T data) {
+    T find(Node<T> node, T data) {
         if (!node) return null
 
         if (node.data == data) {
-            return node
+            return node.data
         }
 
         if (node.left) {
-            Node<T> result = find(node.left, data)
-            if (result)
+            T result = find(node.left, data)
+            if (result != null)
                 return result
         }
 
         if (node.right) {
-            Node<T> result = find(node.right, data)
-            if (result)
+            T result = find(node.right, data)
+            if (result != null)
                 return result
         }
 
