@@ -227,6 +227,13 @@ class BinaryTreeTests {
         assertEquals([1, 2, 3, 4, 5], output)
     }
 
+    @Test
+    void test_traversals_1() {
+        new BinaryTree<>().preOrder({})
+        new BinaryTree<>().inOrder({})
+        new BinaryTree<>().postOrder({})
+    }
+
     /*
              2
             / \

@@ -81,6 +81,7 @@ class BinaryTree<T> {
     }
 
     def preOrder(node, closure) {
+        if (!node) return null
         def ret = closure(node)
         if (node.left) ret = preOrder(node.left, closure)
         if (node.right) ret = preOrder(node.right, closure)
@@ -92,6 +93,7 @@ class BinaryTree<T> {
     }
 
     def inOrder(node, closure) {
+        if (!node) return null
         if (node.left) inOrder(node.left, closure)
         def ret = closure(node)
         if (node.right) ret = inOrder(node.right, closure)
@@ -103,12 +105,17 @@ class BinaryTree<T> {
     }
 
     def postOrder(node, closure) {
+        if (!node) return null
         if (node.left) postOrder(node.left, closure)
         if (node.right) postOrder(node.right, closure)
         return closure(node)
     }
 
     void draw() {
+        if (!root) {
+            println "Empty Tree"
+            return
+        }
         // TODO: could pass the Map, I guess.
         // Map is keyed by depth.
         final AtomicInteger theCount = new AtomicInteger(0)
