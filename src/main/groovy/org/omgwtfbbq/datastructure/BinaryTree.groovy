@@ -36,6 +36,51 @@ class BinaryTree<T> {
         }
     }
 
+    /*
+        Uhhh, remove *first* item w/ this data value, if multiple.
+
+        TODO: I think we can have the 'T' returned: if we end up with a better
+        TODO: comparison operator above, parts of 'T' may not be in the
+        TODO: comparison and so having the full 'T' may be valuable.
+     */
+
+    void remove(T data) {
+        remove(root, data)
+    }
+
+    void remove(Node<T> treeRoot, T data) {
+        Node<T> node = find(treeRoot, data)
+        if (!node) return
+
+        if (node.right) {
+            // in-order traverse
+            Node<T> newSubroot = node.right
+            while (newSubroot.left) newSubroot = newSubroot.left
+            // newSubroot can't be null, can't have non-null left child
+            node.data = newSubroot.data
+            remove(newSubroot, newSubroot.data)
+        } else {
+            // no right children of this node: the left subchild is the new root,
+            // if any.
+            if (node.parent) {
+                // Hmmm, should this be necessary (looking at data)?
+                if (node.parent.data > node.data) {
+                    node.parent.left = node.left
+                } else {
+                    node.parent.right = node.right
+                }
+                if (node.left)
+                    node.left.parent = node.parent
+            } else {
+                // we're root of the tree: new root is left subchild
+                root = node.left
+                if (root) root.parent = null
+            }
+            // Prune node out of tree
+            node.parent = node.left = node.right = null
+        }
+    }
+
     boolean contains(T data) {
         find(data) != null
     }

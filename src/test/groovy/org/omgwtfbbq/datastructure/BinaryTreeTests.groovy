@@ -256,4 +256,178 @@ class BinaryTreeTests {
         assertTrue(output.is(traversal))
         assertEquals([1, 3, 5, 4, 2], output)
     }
+
+    @Test
+    void test_remove_1() {
+        BinaryTree<Integer> tree = new BinaryTree<>()
+        tree.add(2)
+        tree.add(1)
+        tree.add(4)
+        tree.add(3)
+        tree.add(5)
+
+        tree.remove(2)
+        def traversal = []
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 3, 4, 5], traversal)
+
+        tree.remove(4)
+        traversal = []
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 3, 5], traversal)
+    }
+
+    @Test
+    void test_remove_2() {
+        BinaryTree<Integer> tree = new BinaryTree<>()
+        tree.remove(1)
+
+        tree.add(1)
+        tree.remove(1)
+
+        tree.add(2)
+        tree.add(3)
+        tree.remove(2)
+        tree.remove(3)
+    }
+
+    /*
+        Degenerate right.
+     */
+
+    @Test
+    void test_remove_3() {
+        BinaryTree<Integer> tree = new BinaryTree<>()
+        tree.add(1)
+        tree.add(2)
+        tree.add(3)
+        tree.add(4)
+        tree.add(5)
+        tree.add(6)
+
+        tree.remove(3)
+        def traversal = []
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 2, 4, 5, 6], traversal)
+
+        tree.remove(6)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 2, 4, 5], traversal)
+
+        tree.remove(2)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 4, 5], traversal)
+
+        tree.remove(1)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([4, 5], traversal)
+
+        tree.remove(5)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([4], traversal)
+
+        tree.remove(4)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([], traversal)
+    }
+
+    /*
+        Degenerate left
+     */
+
+    @Test
+    void test_remove_4() {
+        BinaryTree<Integer> tree = new BinaryTree<>()
+        tree.add(6)
+        tree.add(5)
+        tree.add(4)
+        tree.add(3)
+        tree.add(2)
+        tree.add(1)
+
+        tree.remove(3)
+        def traversal = []
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 2, 4, 5, 6], traversal)
+
+        tree.remove(6)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 2, 4, 5], traversal)
+
+        tree.remove(2)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 4, 5], traversal)
+
+        tree.remove(1)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([4, 5], traversal)
+
+        tree.remove(5)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([4], traversal)
+
+        tree.remove(4)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([], traversal)
+    }
+
+    /*
+        Uhh, I guess this is degenerate left as well
+     */
+
+    @Test
+    void test_remove_5() {
+        BinaryTree<Integer> tree = new BinaryTree<>()
+        tree.add(1)
+        tree.add(1)
+        tree.add(1)
+        tree.add(1)
+        tree.add(1)
+        tree.add(1)
+
+        tree.remove(1)
+        def traversal = []
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 1, 1, 1, 1], traversal)
+
+        tree.remove(1)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 1, 1, 1], traversal)
+
+        tree.remove(1)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 1, 1], traversal)
+
+        tree.remove(1)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1, 1], traversal)
+
+        tree.remove(1)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([1], traversal)
+
+        tree.remove(1)
+        traversal.clear()
+        tree.inOrder({ node -> traversal << node.data })
+        assertEquals([], traversal)
+    }
+
+    @Test
+    void test_draw_1() {
+        new BinaryTree<Integer>().draw()
+    }
 }
