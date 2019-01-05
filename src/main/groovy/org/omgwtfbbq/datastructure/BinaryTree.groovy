@@ -45,27 +45,27 @@ class BinaryTree<T> {
      */
 
     T find(T data) {
-        return root ? find(root, data) : null
+        return root ? find(root, data)?.data : null
     }
 
     // Pre-orderish.
     // TODO: hmm, maybe pass a "matcher closure" rather than use '=='?  So could do 'String.startsWith', etc.
-    T find(Node<T> node, T data) {
+    Node<T> find(Node<T> node, T data) {
         if (!node) return null
 
         if (node.data == data) {
-            return node.data
+            return node
         }
 
         if (node.left) {
-            T result = find(node.left, data)
-            if (result != null)
+            Node<T> result = find(node.left, data)
+            if (result)
                 return result
         }
 
         if (node.right) {
-            T result = find(node.right, data)
-            if (result != null)
+            Node<T> result = find(node.right, data)
+            if (result)
                 return result
         }
 
