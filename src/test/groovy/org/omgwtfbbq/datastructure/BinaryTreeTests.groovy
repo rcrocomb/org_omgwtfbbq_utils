@@ -259,6 +259,7 @@ class BinaryTreeTests {
 
     @Test
     void test_remove_1() {
+        Integer value
         BinaryTree<Integer> tree = new BinaryTree<>()
         tree.add(2)
         tree.add(1)
@@ -266,15 +267,17 @@ class BinaryTreeTests {
         tree.add(3)
         tree.add(5)
 
-        tree.remove(2)
+        value = tree.remove(2)
         def traversal = []
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([1, 3, 4, 5], traversal)
+        assertEquals(2, value)
 
-        tree.remove(4)
+        value = tree.remove(4)
         traversal = []
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([1, 3, 5], traversal)
+        assertEquals(4, value)
     }
 
     @Test
@@ -297,6 +300,7 @@ class BinaryTreeTests {
 
     @Test
     void test_remove_3() {
+        Integer value
         BinaryTree<Integer> tree = new BinaryTree<>()
         tree.add(1)
         tree.add(2)
@@ -305,35 +309,41 @@ class BinaryTreeTests {
         tree.add(5)
         tree.add(6)
 
-        tree.remove(3)
+        value = tree.remove(3)
         def traversal = []
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([1, 2, 4, 5, 6], traversal)
+        assertEquals(3, value)
 
-        tree.remove(6)
+        value = tree.remove(6)
         traversal.clear()
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([1, 2, 4, 5], traversal)
+        assertEquals(6, value)
 
-        tree.remove(2)
+        value = tree.remove(2)
         traversal.clear()
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([1, 4, 5], traversal)
+        assertEquals(2, value)
 
-        tree.remove(1)
+        value = tree.remove(1)
         traversal.clear()
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([4, 5], traversal)
+        assertEquals(1, value)
 
-        tree.remove(5)
+        value = tree.remove(5)
         traversal.clear()
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([4], traversal)
+        assertEquals(5, value)
 
-        tree.remove(4)
+        value = tree.remove(4)
         traversal.clear()
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([], traversal)
+        assertEquals(4, value)
     }
 
     /*
@@ -342,6 +352,7 @@ class BinaryTreeTests {
 
     @Test
     void test_remove_4() {
+        Integer value
         BinaryTree<Integer> tree = new BinaryTree<>()
         tree.add(6)
         tree.add(5)
@@ -350,35 +361,41 @@ class BinaryTreeTests {
         tree.add(2)
         tree.add(1)
 
-        tree.remove(3)
+        value = tree.remove(3)
         def traversal = []
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([1, 2, 4, 5, 6], traversal)
+        assertEquals(3, value)
 
-        tree.remove(6)
+        value = tree.remove(6)
         traversal.clear()
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([1, 2, 4, 5], traversal)
+        assertEquals(6, value)
 
-        tree.remove(2)
+        value = tree.remove(2)
         traversal.clear()
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([1, 4, 5], traversal)
+        assertEquals(2, value)
 
-        tree.remove(1)
+        value = tree.remove(1)
         traversal.clear()
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([4, 5], traversal)
+        assertEquals(1, value)
 
-        tree.remove(5)
+        value = tree.remove(5)
         traversal.clear()
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([4], traversal)
+        assertEquals(5, value)
 
-        tree.remove(4)
+        value = tree.remove(4)
         traversal.clear()
         tree.inOrder({ node -> traversal << node.data })
         assertEquals([], traversal)
+        assertEquals(4, value)
     }
 
     /*

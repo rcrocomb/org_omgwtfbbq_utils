@@ -38,20 +38,17 @@ class BinaryTree<T> {
 
     /*
         Uhhh, remove *first* item w/ this data value, if multiple.
-
-        TODO: I think we can have the 'T' returned: if we end up with a better
-        TODO: comparison operator above, parts of 'T' may not be in the
-        TODO: comparison and so having the full 'T' may be valuable.
      */
 
-    void remove(T data) {
-        remove(root, data)
+    T remove(T data) {
+        return remove(root, data)
     }
 
-    void remove(Node<T> treeRoot, T data) {
+    T remove(Node<T> treeRoot, T data) {
         Node<T> node = find(treeRoot, data)
-        if (!node) return
+        if (!node) return null
 
+        T fromTree = node.data
         if (node.right) {
             // in-order traverse
             Node<T> newSubroot = node.right
@@ -79,6 +76,7 @@ class BinaryTree<T> {
             // Prune node out of tree
             node.parent = node.left = node.right = null
         }
+        return fromTree
     }
 
     boolean contains(T data) {
