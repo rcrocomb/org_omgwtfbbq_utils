@@ -136,7 +136,7 @@ class BinaryTree<T> {
             atThisDepth.eachWithIndex { coordinate, j ->
                 int relativeX = j == 0 ? coordinate.count : coordinate.count - atThisDepth[j - 1].count // TODO: could do a 'previous' instead
                 relativeX.times { print "    " }
-                print (coordinate.data != null ? coordinate.data : "x")
+                print(coordinate.data != null ? coordinate.data : "x")
                 if (j + 1 == atThisDepth.size()) print "\n"
             }
         }
