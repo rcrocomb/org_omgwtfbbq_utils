@@ -10,7 +10,9 @@ class BinaryTree<T> {
 
     Node<T> root
 
-    def add(T newData) {
+    boolean isEmpty() { root == null }
+
+    void add(T newData) {
         Preconditions.checkArgument(newData != null)
         if (!root) {
             // I think parent = null so that we could traverse up and know when to stop more easily?
@@ -20,20 +22,26 @@ class BinaryTree<T> {
         }
     }
 
-    def add(Node node, T newData) {
+    Node<T> add(Node node, T newData) {
         if (newData <= node.data) {
             if (node.left) {
                 add(node.left, newData)
             } else {
-                node.left = new Node(data: newData, left: null, right: null, parent: node)
+                node.left = doNewNode(node, newData)
+                return node.left
             }
         } else {
             if (node.right) {
                 add(node.right, newData)
             } else {
-                node.right = new Node(data: newData, left: null, right: null, parent: node)
+                node.right = doNewNode(node, newData)
+                return node.right
             }
         }
+    }
+
+    protected doNewNode(Node<T> node, T newData) {
+        return new Node(data: newData, left: null, right: null, parent: node)
     }
 
     /*
@@ -168,7 +176,7 @@ class BinaryTree<T> {
                 elements[depth] = []
             }
             // new elements always go on the end
-            elements[depth] << new Coordinate(depth: depth, count: count.getAndIncrement(), data: node.data)
+            elements[depth] << new Coordinate(depth: depth, count: count.getAndIncrement(), data: node)
         }
         // Builds the 'elements' data structure
         draw(root, action, theCount, 0)
@@ -179,12 +187,14 @@ class BinaryTree<T> {
             atThisDepth.eachWithIndex { coordinate, j ->
                 int relativeX = j == 0 ? coordinate.count : coordinate.count - atThisDepth[j - 1].count // TODO: could do a 'previous' instead
                 relativeX.times { print "    " }
-                print(coordinate.data != null ? coordinate.data : "x")
+                print(coordinate.data != null ? printNode(coordinate.data) : "x")
                 if (j + 1 == atThisDepth.size()) print "\n"
             }
         }
         println "-" * 80
     }
+
+    protected String printNode(node) { "" + node.data }
 
     /*
         Bleh.  In order for tree to draw right, we have to increment on null
@@ -244,5 +254,5 @@ class BinaryTree<T> {
 class Coordinate<T> {
     int depth // not truly needed, but whatevs
     int count
-    T data
+    Node<T> data
 }

@@ -1,7 +1,6 @@
 package org.omgwtfbbq.datastructure
 
 import groovy.util.logging.Commons
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 import static org.junit.jupiter.api.Assertions.*
@@ -12,7 +11,7 @@ class BinaryTreeTests {
     @Test
     void test_add_0() {
         BinaryTree<Integer> tree = new BinaryTree<>()
-        Assertions.assertThrows(IllegalArgumentException, {
+        assertThrows(IllegalArgumentException, {
             tree.add(null)
         })
     }
