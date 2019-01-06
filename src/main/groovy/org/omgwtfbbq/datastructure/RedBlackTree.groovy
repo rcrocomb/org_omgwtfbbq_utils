@@ -2,29 +2,28 @@ package org.omgwtfbbq.datastructure
 
 import groovy.util.logging.Commons
 
+/*
+    Good ol' self-balancing Red/Black tree, using algorithms largely based on
+    those in "Data Structures and Algorithms in Java (4rd edition)" by
+    Goodrich and Tamassia.
+
+    I probably wouldn't use kernel-style single if()s lacking braces in professional
+    code, but I kinda enjoy it.
+ */
+
 @Commons
 class RedBlackTree<T> extends BinaryTree<T> {
-
-    /*
-        TODO: awwh man, 'left' and 'right' and 'parent' are expected to be
-        TODO: Node<T>, so asking for color is problematic.  Groovy half-assedness to the rescue.
-     */
 
     static class RedBlackNode<T> extends Node<T> {
         Color color
 
         boolean isRed() { color == Color.RED }
         boolean isBlack() { color == Color.BLACK }
-
-        Color parentsColor() { parent.color }
-
         boolean isParentRed() { parent.isRed() }
 
         RedBlackNode<T> sibling() {
             // No parent or grandparent: can't have an an "uncle/aunt"
-            if (!parent) {
-                return null
-            }
+            if (!parent) return null
 
             (RedBlackNode)(parent.left.is(this) ? parent.right : parent.left)
         }
@@ -41,12 +40,12 @@ class RedBlackTree<T> extends BinaryTree<T> {
             parent.sibling()?.color ?: Color.BLACK
         }
 
-        @Override
-        String toString() {
-            return "color = $color,${super.toString()}"
-        }
+        @Override String toString() { "color = $color,${super.toString()}" }
     }
 
+    // I prefer an enum over the boolean 'isRed' or similar, though that has the
+    // advantage of never being null and an if-else is sufficient, whereas I feel
+    // the need to cover my ass w/ an enum.  Ah well.
     enum Color {
         RED, BLACK
     }
@@ -66,7 +65,7 @@ class RedBlackTree<T> extends BinaryTree<T> {
      */
 
     protected doNewNode(RedBlackNode<T> node, T newData) {
-        return new RedBlackNode<>(color: Color.RED, data: newData, left: null, right: null, parent: node)
+        new RedBlackNode<>(color: Color.RED, data: newData, left: null, right: null, parent: node)
     }
 
     void fixDoubleRed(RedBlackNode<T> newNode) {
@@ -95,15 +94,16 @@ class RedBlackTree<T> extends BinaryTree<T> {
         }
     }
 
+    /*
+        based on page 458.  Deets are in whichStructure()
+     */
+
     void restructure(RedBlackNode<T> newNode) {
         def p = newNode.parent
         def gp = p.parent
         int ordering = whichStructure(newNode)
         switch (ordering) {
             case 0:
-                // z is fine
-                // for v we need to relocate its right child to be 'u's left child
-                // for u we just need the above change, plus update its parent
                 pointIt(gp, p)
                 gp.left = p.right
                 p.right = gp
@@ -158,7 +158,7 @@ class RedBlackTree<T> extends BinaryTree<T> {
     }
 
     /*
-
+        page 458
 
         0:             1:         2:           3:
                 u            u        u              u
@@ -172,9 +172,18 @@ class RedBlackTree<T> extends BinaryTree<T> {
         where 'u' is the grand parent, 'v' is the parent, and 'z' is the new node
 
         ... uhhh '1' and '2' are always null, right?  It's a new node.
+
+        Given this, the idea is to re-order these nodes such that, if the nodes
+        were sorted by value (really, the order they'd be encountered in an
+        in-order traversal), and considered 'a' -> 'b' -> 'c' in this fashion,
+        that 'b' becomes the new sub-tree root and 'a' its left child and 'c' its
+        right child, i.e.:
+          b
+         / \
+        a   c
      */
 
-    def whichStructure(newNode) {
+    def whichStructure(RedBlackNode<T> newNode) {
         def inOrder = inOrderize(newNode)
         // recolor them now, who cares?
         inOrder[0].color = Color.RED
@@ -200,7 +209,7 @@ class RedBlackTree<T> extends BinaryTree<T> {
         iterations.
     */
 
-    def whichStructure2(newNode) {
+    def whichStructure2(RedBlackNode<T> newNode) {
         def inOrder = inOrderize(newNode)
         // recolor them now, who cares?
         inOrder[0].color = Color.RED
@@ -220,13 +229,11 @@ class RedBlackTree<T> extends BinaryTree<T> {
     /*
         Put newNode, its parent, and its grandparent in sorted order (by data)
 
-        This method only called for trees  tall enough that newNode.parent.parent
+        This method only called for trees tall enough that newNode.parent.parent
         is known okay.
      */
 
-    List inOrderize(RedBlackNode<T> newNode) {
-        [newNode, newNode.parent, newNode.parent.parent].sort { it.data }
-    }
+    def inOrderize(RedBlackNode<T> newNode) { [newNode, newNode.parent, newNode.parent.parent].sort { it.data } }
 
     protected String printNode(node) { "" + node.data + "/" + (node.color == Color.RED ? "R" : "B") }
 }
