@@ -14,7 +14,7 @@ class BinaryTree<T> {
 
     void add(T newData) {
         Preconditions.checkArgument(newData != null)
-        if (!root) {
+        if (isEmpty()) {
             // I think parent = null so that we could traverse up and know when to stop more easily?
             root = new Node(data: newData, left: null, right: null, parent: null)
         } else {
@@ -40,17 +40,13 @@ class BinaryTree<T> {
         }
     }
 
-    protected doNewNode(Node<T> node, T newData) {
-        return new Node(data: newData, left: null, right: null, parent: node)
-    }
+    protected doNewNode(Node<T> node, T newData) { new Node(data: newData, left: null, right: null, parent: node) }
 
     /*
         Uhhh, remove *first* item w/ this data value, if multiple.
      */
 
-    T remove(T data) {
-        return remove(root, data)
-    }
+    T remove(T data) { return remove(root, data) }
 
     T remove(Node<T> treeRoot, T data) {
         Node<T> node = find(treeRoot, data)
@@ -67,19 +63,18 @@ class BinaryTree<T> {
         } else {
             // no right children of this node: the left subchild is the new root,
             // if any.
-            if (node.parent) {
-                // Hmmm, should this be necessary (looking at data)?
-                if (node.parent.data > node.data) {
+            if (node.isRoot()) {
+                // we're root of the tree: new root is left subchild
+                root = node.left
+                if (root) root.parent = null
+            } else {
+                if (node.isLeftSubchild()) {
                     node.parent.left = node.left
                 } else {
                     node.parent.right = node.right
                 }
                 if (node.left)
                     node.left.parent = node.parent
-            } else {
-                // we're root of the tree: new root is left subchild
-                root = node.left
-                if (root) root.parent = null
             }
             // Prune node out of tree
             node.parent = node.left = node.right = null
@@ -87,26 +82,16 @@ class BinaryTree<T> {
         return fromTree
     }
 
-    boolean contains(T data) {
-        find(data) != null
-    }
+    boolean contains(T data) { find(data) != null }
 
-    /*
-        For simple types like integer, find() is basically contains().
-     */
-
-    T find(T data) {
-        return root ? find(root, data)?.data : null
-    }
+    // For simple types like integer, find() is basically contains().
+    T find(T data) { !isEmpty() ? find(root, data)?.data : null }
 
     // Pre-orderish.
     // TODO: hmm, maybe pass a "matcher closure" rather than use '=='?  So could do 'String.startsWith', etc.
     Node<T> find(Node<T> node, T data) {
         if (!node) return null
-
-        if (node.data == data) {
-            return node
-        }
+        if (node.data == data) return node
 
         if (node.left) {
             Node<T> result = find(node.left, data)
@@ -123,13 +108,7 @@ class BinaryTree<T> {
         return null
     }
 
-    /*
-        Closure gets passed the Node.  Should I only pass the data?
-     */
-
-    def preOrder(closure) {
-        preOrder(root, closure)
-    }
+    def preOrder(closure) { preOrder(root, closure) }
 
     def preOrder(node, closure) {
         if (!node) return null
@@ -139,9 +118,7 @@ class BinaryTree<T> {
         return ret
     }
 
-    def inOrder(closure) {
-        inOrder(root, closure)
-    }
+    def inOrder(closure) { inOrder(root, closure) }
 
     def inOrder(node, closure) {
         if (!node) return null
@@ -151,9 +128,7 @@ class BinaryTree<T> {
         return ret
     }
 
-    def postOrder(closure) {
-        postOrder(root, closure)
-    }
+    def postOrder(closure) { postOrder(root, closure) }
 
     def postOrder(node, closure) {
         if (!node) return null
@@ -163,7 +138,7 @@ class BinaryTree<T> {
     }
 
     void draw() {
-        if (!root) {
+        if (isEmpty()) {
             println "Empty Tree"
             return
         }
