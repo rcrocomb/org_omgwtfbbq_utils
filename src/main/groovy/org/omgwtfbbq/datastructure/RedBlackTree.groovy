@@ -96,6 +96,12 @@ class RedBlackTree<T> extends BinaryTree<T> {
 
     /*
         based on page 458.  Deets are in whichStructure()
+
+        Dood.  They actually have pseudocode on page 425: who knew?  I mean,
+        they said "trinode restructuring", which I presumed was just a term
+        of art and not a "hey, remember when we told you how to do this 30
+        page ago?"  I guess I should've figured they'd be pretty specific in
+        a book like this.  Teach me not to read the whole chapter.
      */
 
     void restructure(RedBlackNode<T> newNode) {
