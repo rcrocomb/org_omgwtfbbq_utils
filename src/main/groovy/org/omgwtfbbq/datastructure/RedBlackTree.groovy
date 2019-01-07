@@ -4,7 +4,7 @@ import groovy.util.logging.Commons
 
 /*
     Good ol' self-balancing Red/Black tree, using algorithms largely based on
-    those in "Data Structures and Algorithms in Java (4rd edition)" by
+    those in "Data Structures and Algorithms in Java (3rd edition)" by
     Goodrich and Tamassia.
 
     I probably wouldn't use kernel-style single if()s lacking braces in professional
