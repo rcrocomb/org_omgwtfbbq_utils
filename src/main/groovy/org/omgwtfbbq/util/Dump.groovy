@@ -62,19 +62,19 @@ abstract class Dump {
 	}
 
 	static void dump(Object o) {
-		prettyJson(o2Json(o))
+		prettyJson(Util.o2Json(o))
 	}
 
 	// '#' is not in base-64
 	private static String forSecret(String secret) { secret[0..3] + ('#' * (secret.length() - 4)) }
 
 	static void prettyJson(json) { prettyJson(log, json) }
-	static void prettyJson(Log l, json) { prettyJson(l, o2Json(json)) }
+	static void prettyJson(Log l, json) { prettyJson(l, Util.o2Json(json)) }
 
 	static void prettyJson(Log l, String s) { debug(l, JsonOutput.prettyPrint(s)) }
 	static void prettyJson(String s) { prettyJson(log, s) }
 
-	static String gimmePrettyJson(json) { JsonOutput.prettyPrint(o2Json(json)) }
+	static String gimmePrettyJson(json) { JsonOutput.prettyPrint(Util.o2Json(json)) }
 
 	private Dump() {}
 }

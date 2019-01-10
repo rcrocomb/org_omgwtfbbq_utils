@@ -22,6 +22,11 @@ class BinaryTree<T> {
         }
     }
 
+    @Override
+    Object invokeMethod(String name, Object args) {
+        return super.invokeMethod(name, args)
+    }
+
     Node<T> add(Node node, T newData) {
         if (newData <= node.data) {
             if (node.left) {
