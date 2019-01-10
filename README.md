@@ -1,5 +1,5 @@
 # org_omgwtfbbq_utils
-stuff I use plus trying my hand at various old CS stuff like Red/Black trees or whatever.
+stuff I use plus trying my hand at various old CS things like Red/Black trees or whatever.
 
 I've got a bunch of Groovy I pretty much carry around and use when writing quick tools.
 I'm tired of typing it or scping it or whatever.  If it's here with an open license then
