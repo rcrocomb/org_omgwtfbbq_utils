@@ -95,6 +95,93 @@ class RedBlackTree<T> extends BinaryTree<T> {
     }
 
     /*
+            x                 y
+           / \               / \
+          1   y      -->    x   3
+             / \           / \
+             2  3         1   2
+
+        Page 278 of 'Introduction to Algorithms 2nd Edition'
+     */
+
+    void leftRotate(RedBlackNode<T> x) {
+        // Turn right subchild's left subtree into node's right subtree
+        def y = x.right
+        x.right = y.left
+        if (y.left) {
+            y.left.parent = x
+        }
+        // So now x.right points to '2' and '2' points back to x
+        y.parent = x.parent
+        if (x.isRoot()) {
+            root = y
+        } else {
+            if (x.isLeftSubchild()) {
+                x.parent.left = y
+            } else {
+                x.parent.right = y
+            }
+
+        }
+        // Put 'x' on 'y's left.
+        y.left = x
+        x.parent = y
+    }
+
+    /*
+            x                 y
+           / \               / \
+          y   3      -->    1   x
+         / \                   / \
+        1   2                 2   3
+     */
+
+    void rightRotate(RedBlackNode<T> x) {
+        def y = x.left
+        x.left = y.right
+        if (y.right) {
+            y.right.parent = x
+        }
+        y.parent = x.parent
+        if (x.isRoot()) {
+            root = y
+        } else {
+            if (x.isLeftSubchild()) {
+                x.parent.left = y
+            } else {
+                x.parent.right = y
+            }
+        }
+        y.right = x
+        x.parent = y
+    }
+
+    // Significant commonality/symmetry in the methods means we can smoosh them
+    void wackyLeft(RedBlackNode<T> x)  { rotate(x, "left")  }
+    void wackyRight(RedBlackNode<T> x) { rotate(x, "right") }
+
+    void rotate(RedBlackNode<T> x, dir) {
+        def opposite = dir == "left" ? "right" : "left"
+        def y = x."$opposite"
+        x."$opposite" = y."$dir"
+        if (y."$dir") {
+            y."$dir".parent = x
+        }
+        y.parent = x.parent
+        if (x.isRoot()) {
+            root = y
+        } else {
+            if (x.isLeftSubchild()) {
+                x.parent.left = y
+            } else {
+                x.parent.right = y
+            }
+        }
+        y."$dir" = x
+        x.parent = y
+    }
+
+    /*
         based on page 458.  Deets are in whichStructure()
 
         Dood.  They actually have pseudocode on page 425: who knew?  I mean,

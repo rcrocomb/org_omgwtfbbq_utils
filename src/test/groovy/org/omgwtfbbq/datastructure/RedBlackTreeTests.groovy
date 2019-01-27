@@ -512,5 +512,120 @@ class RedBlackTreeTests {
         assertNull(seventeen.right)
         tree.draw()
     }
-}
 
+    /*
+                5                 10
+               / \               /  \
+              3   10     -->    5    12
+                  / \          / \
+                 7   12       3   7
+     */
+
+    @Test
+    void test_leftRotate_1() {
+        doLeftRotateTest(false)
+    }
+
+    @Test
+    void test_leftRotate_1w() {
+        doLeftRotateTest(true)
+    }
+
+    private static void doLeftRotateTest(boolean useWacky) {
+        def tree = new RedBlackTree<Integer>()
+        tree.add(5)
+        tree.add(3)
+        tree.add(10)
+        tree.add(7)
+        tree.add(12)
+        tree.draw()
+
+        if (useWacky) {
+            tree.wackyLeft(tree.root)
+        } else {
+            tree.leftRotate(tree.root)
+        }
+        tree.draw()
+
+        // See if we messed up the basic stuff.
+        def traversal = []
+        def output = tree.inOrder({ node -> traversal << node.data })
+        assertTrue(output.is(traversal))
+        assertEquals([3, 5, 7, 10, 12], output)
+
+        def node = tree.root
+        assertEquals(10, node.data)
+        assertNotNull(node.left)
+        def left = node.left
+        assertEquals(5, left.data)
+        assertNotNull(left.left)
+        assertEquals(3, left.left.data)
+        assertNotNull(left.right)
+        assertEquals(7, left.right.data)
+
+        assertNotNull(node.right)
+        assertEquals(12, node.right.data)
+        assertNull(node.right.left)
+        assertNull(node.right.right)
+
+    }
+
+
+    /*
+            10               8
+            / \             / \
+           8   12   -->    7   10
+          / \                 /  \
+         7   9               9    12
+     */
+
+    @Test
+    void test_rightRotate_1() {
+        doRightRotateTest(false)
+    }
+
+    @Test
+    void test_RightRotate_1w() {
+        doRightRotateTest(true)
+    }
+
+    private static void doRightRotateTest(boolean useWacky) {
+        def tree = new RedBlackTree<Integer>()
+        tree.add(10)
+        tree.add(8)
+        tree.add(12)
+        tree.add(7)
+        tree.add(9)
+        tree.draw()
+
+        if (useWacky) {
+            tree.wackyRight(tree.root)
+        } else {
+            tree.rightRotate(tree.root)
+        }
+        tree.draw()
+
+        // See if we messed up the basic stuff.
+        def traversal = []
+        def output = tree.inOrder({ node -> traversal << node.data })
+        assertTrue(output.is(traversal))
+        assertEquals([7, 8, 9, 10, 12], output)
+
+        def node = tree.root
+        assertEquals(8, node.data)
+
+        assertNotNull(node.left)
+        def left = node.left
+        assertEquals(7, left.data)
+        assertNull(node.left.left)
+        assertNull(node.left.right)
+
+        assertNotNull(node.right)
+        def right = node.right
+        assertEquals(10, right.data)
+        assertNotNull(right.left)
+        assertEquals(9, right.left.data)
+        assertNotNull(right.right)
+        assertEquals(12, right.right.data)
+    }
+}
