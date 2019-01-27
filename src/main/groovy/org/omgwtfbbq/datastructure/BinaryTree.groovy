@@ -59,9 +59,7 @@ class BinaryTree<T> {
 
         T fromTree = node.data
         if (node.right) {
-            // in-order traverse
-            Node<T> newSubroot = node.right
-            while (newSubroot.left) newSubroot = newSubroot.left
+            Node<T> newSubroot = nextInOrder(node)
             // newSubroot can't be null, can't have non-null left child
             node.data = newSubroot.data
             remove(newSubroot, newSubroot.data)
@@ -85,6 +83,13 @@ class BinaryTree<T> {
             node.parent = node.left = node.right = null
         }
         return fromTree
+    }
+
+    Node<T> nextInOrder(Node<T> node) {
+        // in-order traverse
+        Node<T> newSubroot = node.right
+        while (newSubroot.left) newSubroot = newSubroot.left
+        return newSubroot
     }
 
     boolean contains(T data) { find(data) != null }
