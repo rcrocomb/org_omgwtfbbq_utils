@@ -118,6 +118,19 @@ class BinaryTree<T> {
         return null
     }
 
+    /*
+        Take 'x's place in the tree.  If it is root, then 'this' is now root,
+        otherwise, replace x as its parent's subchild.
+     */
+
+    void reRoot(Node<T> x, Node<T> y) {
+        if (x.isRoot()) {
+            root = y
+        } else {
+            x.replaceAsSubChild(y)
+        }
+    }
+
     def preOrder(closure) { preOrder(root, closure) }
 
     def preOrder(node, closure) {

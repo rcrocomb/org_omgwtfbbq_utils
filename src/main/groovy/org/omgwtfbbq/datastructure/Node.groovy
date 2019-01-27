@@ -33,6 +33,18 @@ class Node<T> implements Comparable<T> {
         parent && parent."$which" && parent."$which".is(this)
     }
 
+    /*
+        Replace 'this' as the child of this.parent with 'y'.
+     */
+
+    void replaceAsSubChild(Node<T> y) {
+        if (this.isLeftSubchild()) {
+            this.parent.left = y
+        } else {
+            this.parent.right = y
+        }
+    }
+
     @Override
     String toString() {
         return String.format("%s left %s right %s parent %s", data, left?.data, right?.data, parent != null)

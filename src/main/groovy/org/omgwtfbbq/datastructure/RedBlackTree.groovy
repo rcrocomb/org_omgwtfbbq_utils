@@ -113,16 +113,7 @@ class RedBlackTree<T> extends BinaryTree<T> {
         }
         // So now x.right points to '2' and '2' points back to x
         y.parent = x.parent
-        if (x.isRoot()) {
-            root = y
-        } else {
-            if (x.isLeftSubchild()) {
-                x.parent.left = y
-            } else {
-                x.parent.right = y
-            }
-
-        }
+        reRoot(x, y)
         // Put 'x' on 'y's left.
         y.left = x
         x.parent = y
@@ -143,15 +134,7 @@ class RedBlackTree<T> extends BinaryTree<T> {
             y.right.parent = x
         }
         y.parent = x.parent
-        if (x.isRoot()) {
-            root = y
-        } else {
-            if (x.isLeftSubchild()) {
-                x.parent.left = y
-            } else {
-                x.parent.right = y
-            }
-        }
+        reRoot(x, y)
         y.right = x
         x.parent = y
     }
@@ -168,15 +151,7 @@ class RedBlackTree<T> extends BinaryTree<T> {
             y."$dir".parent = x
         }
         y.parent = x.parent
-        if (x.isRoot()) {
-            root = y
-        } else {
-            if (x.isLeftSubchild()) {
-                x.parent.left = y
-            } else {
-                x.parent.right = y
-            }
-        }
+        reRoot(x, y)
         y."$dir" = x
         x.parent = y
     }
